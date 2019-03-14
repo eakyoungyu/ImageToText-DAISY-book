@@ -7,3 +7,6 @@
 # 사용한 API & Library
 - Google Vision: https://cloud.google.com/vision/docs/ocr?hl=ko
 - kospacing: https://github.com/haven-jeon/PyKoSpacing
+
+# 제작 과정
+https://y2k2.tistory.com/2
