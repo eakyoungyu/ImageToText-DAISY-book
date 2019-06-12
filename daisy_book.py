@@ -8,7 +8,31 @@ from google.cloud import vision
 from google.cloud.vision import types
 from google.protobuf.json_format import MessageToJson
 from pykospacing import spacing
+# 설정 ======================================================
 
+# 책 이름
+book_name = "y2k2"
+
+# 시작 페이지
+start_file = 1
+
+# 마지막 페이지
+end_file = 100
+
+
+# 이미지 폴더(책을 스캔한 이미지가 저장된 폴더): image_page 안의 book_name 폴더
+IMG_DIR = os.path.join(os.path.dirname(__file__), "image_page\\"+book_name)
+
+# 각 페이지 텍스트 파일을 저장할 폴더
+PAGE_DIR = os.path.join(os.path.dirname(__file__), "txt_page\\"+book_name)
+
+# 책 전체 내용을 저장할 폴더: 이 폴더 아래에 책의 텍스트 파일이 저장됨
+BOOK_DIR = os.path.join(os.path.dirname(__file__), "txt_book")
+
+# 책 텍스트 파일의 이름
+book_path = os.path.join(BOOK_DIR, book_name+".txt")
+
+#============================================================
 
 # 덮어쓰기(이어쓰기X)
 def merge(outpath, page_dir, start, end):
@@ -71,22 +95,6 @@ def detect_document(input_path, output_path, page_num):
                         text_file.write(par_word)
                         text_file.write('\n')
 def main():
-	# 책 이름
-	book_name = "testbook"
-
-	# 시작 페이지, 마지막 페이지
-	start_file = 13
-	end_file = 17
-
-	# 이미지 폴더
-	IMG_DIR = os.path.join(os.path.dirname(__file__), "_image\\"+book_name)
-	# 각 페이지 텍스트 파일을 저장할 폴더
-	PAGE_DIR = os.path.join(os.path.dirname(__file__), "_txt_page\\"+book_name)
-	# 책 전체 내용을 저장할 폴더
-	BOOK_DIR = os.path.join(os.path.dirname(__file__), "_txt_book")
-	# 책 전체 텍스트 파일 이름
-	book_path = os.path.join(BOOK_DIR, book_name+".txt")
-
 	for file_name in range(start_file, end_file+1):
 		page_path = os.path.join(PAGE_DIR, str(file_name)+".txt")
 		img_path = os.path.join(IMG_DIR, str(file_name)+".jpg")
@@ -95,10 +103,5 @@ def main():
 
 	# 파일 합치기
 	merge(book_path, PAGE_DIR, start_file, end_file)
-	
-
-os.system ('set GOOGLE_APPLICATION_CREDENTIALS=C:\\2K\\workspace\\python-workspace\\imagetotext\\key\\ImageToText-031ec8fa0132.json')
-print('++++SET++++')
-os.system('echo GOOGLE_APPLICATION_CREDENTIALS')
 if __name__ == "__main__":
     main()
